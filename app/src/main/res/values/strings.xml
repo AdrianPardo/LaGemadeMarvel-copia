@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">La Gema de Marvel</string>
+    <string name="title_activity_navegation_panel">NavegationPanel</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">La Gema de Marvel</string>
+    <string name="nav_header_subtitle">lagemademarvel@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="login">Inicia sesion</string>
+    <string name="email">Ejemplo@email.com</string>
+    <string name="password">Contraseña</string>
+
+
+
+    <string name="title_activity_register">Registrate</string>
+    <string name="empty_login_field">Campo vacio, por favor, rellena todos los campos para ingresar</string>
+    <string name="login_failed_message">Log in fallados &#8230;, espera unos minutos.</string>
+</resources>
