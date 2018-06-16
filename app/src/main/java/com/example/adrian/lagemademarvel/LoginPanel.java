@@ -27,7 +27,7 @@ public class LoginPanel extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_login_panel);
+        setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         passwordET = (EditText) findViewById(R.id.login_password);
         emailET = (EditText) findViewById(R.id.login_email);

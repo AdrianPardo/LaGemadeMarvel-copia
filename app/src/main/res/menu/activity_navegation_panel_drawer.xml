@@ -4,32 +4,51 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/nav_personajes"
-            android:icon="@drawable/arc_reactor_logo"
-            android:title="Personajes" />
-        <item
-            android:id="@+id/nav_comics"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Comics" />
-        <item
-            android:id="@+id/nav_noticias"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_menu_news"
             android:title="Noticias" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/usericon"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_stores"
+            android:icon="@drawable/store"
+            android:title="Tiendas" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Buscar">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_characters"
+                android:icon="@drawable/lupa"
+                android:title="Personajes" />
             <item
-                android:id="@+id/nav_logout"
+                android:id="@+id/nav_comics"
+                android:icon="@drawable/lupa"
+                android:title="Comics" />
+        </menu>
+    </item>
+
+    <item android:title="Favoritos">
+        <menu>
+            <item
+                android:id="@+id/nav_fav_characters"
+                android:icon="@drawable/arc_reactor_logo_trans"
+                android:title="Personajes" />
+            <item
+                android:id="@+id/nav_fav_comics"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Comics" />
+        </menu>
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_LogOut"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Log out" />
         </menu>

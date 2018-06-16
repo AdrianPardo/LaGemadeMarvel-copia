@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="ColorBarramenu">#ffffff</color>
     <color name="colorAccent">#ffffff</color>
-    <color name="colorLogin">#ccc</color>
-    <color name="white">#ffffff</color>
+    <color name="BlancoRoto">#ccc</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="White">#ffffff</color>
+    <color name="Grey">#7c7c7c</color>
+    <color name="Transparent">#00ffffff</color>
+    <color name="Black">#000000</color>
+    <color name="DarkGrey">#414141</color>
 </resources>

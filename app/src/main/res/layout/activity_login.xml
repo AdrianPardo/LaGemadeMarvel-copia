@@ -13,7 +13,7 @@
         tools:context=".LoginScreen"
         android:background="@drawable/i_want_you"
         android:backgroundTintMode="multiply"
-        android:backgroundTint="@color/colorLogin">
+        android:backgroundTint="@color/BlancoRoto">
 
         <EditText
             android:id="@+id/login_email"
@@ -27,7 +27,8 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:hint="@string/email"
-            android:textColorHint="@color/colorLogin"
+            android:textColor="@color/BlancoRoto"
+            android:textColorHint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,8 @@
             android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="@string/password"
-            android:textColorHint="@color/colorLogin"
+            android:textColor="@color/BlancoRoto"
+            android:textColorHint="@color/colorWhite"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="@+id/login_email"
             app:layout_constraintHorizontal_bias="0.0"
@@ -88,7 +90,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/White"
             android:text="Logging in..."
             android:layout_marginTop="14dp"
             android:layout_marginLeft="5dp"
