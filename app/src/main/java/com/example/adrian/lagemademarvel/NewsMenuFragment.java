@@ -1,35 +1,27 @@
 package com.example.adrian.lagemademarvel;
 
-import android.app.DownloadManager;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.gms.common.api.Response;
-
-import org.json.JSONObject;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CharacterViewFragment.OnFragmentInteractionListener} interface
+ * {@link NewsMenuFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CharacterViewFragment#newInstance} factory method to
+ * Use the {@link NewsMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CharacterViewFragment extends android.app.Fragment {
+public class NewsMenuFragment extends android.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,14 +30,12 @@ public class CharacterViewFragment extends android.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ImageView searchBTN, charImg;
-    EditText searchBar;
-    TextView charName, copyright, charDesc;
-    RecyclerView rv;
+    FirebaseUser user;
+    FirebaseAuth mAuth;
 
     private OnFragmentInteractionListener mListener;
 
-    public CharacterViewFragment() {
+    public NewsMenuFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +45,11 @@ public class CharacterViewFragment extends android.app.Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CharacterViewFragment.
+     * @return A new instance of fragment NewsMenuFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CharacterViewFragment newInstance(String param1, String param2) {
-        CharacterViewFragment fragment = new CharacterViewFragment();
+    public static NewsMenuFragment newInstance(String param1, String param2) {
+        NewsMenuFragment fragment = new NewsMenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,38 +60,16 @@ public class CharacterViewFragment extends android.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_character_view, container, false);
-
-        searchBar = view.findViewById(R.id.Search_char);
-        charName = view.findViewById(R.id.NombrePersonaje);
-        copyright = view.findViewById(R.id.alterego);
-        charDesc = view.findViewById(R.id.descripcionpersonaje);
-        charImg= view.findViewById(R.id.imagenpersonaje);
-        rv = view.findViewById(R.id.character_comics);
-
-        searchBTN = view.findViewById(R.id.Search_char_btn);
-        searchBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CharacterConnection(charName, charDesc, copyright, searchBar.getText().toString(), getActivity(), charImg, rv).execute();
-                Log.e("in onclick", "Buscando....");
-            }
-        });
-
-
-
-
-        return view;
+        Verified();
+        return inflater.inflate(R.layout.fragment_news_menu, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -143,5 +111,10 @@ public class CharacterViewFragment extends android.app.Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
+    public void Verified(){
+        if(!user.isEmailVerified()){
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.content_frame, new AccessDeniedFragment()).commit();
+        }
+    }
 }

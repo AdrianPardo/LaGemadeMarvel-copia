@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterPanel extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String email, password;
-    private EditText surnameET, apodoET, emailET, passwordET, checkPasswordET;
+    private EditText usernameET, apodoET, emailET, passwordET, checkPasswordET;
     boolean inserted = false;
 
     @Override
@@ -37,9 +37,9 @@ public class RegisterPanel extends AppCompatActivity {
         }
         setContentView(R.layout.activity_registro);
         emailET = (EditText) findViewById(R.id.user_email);
-        apodoET = (EditText) findViewById(R.id.user_name);
+        apodoET = (EditText) findViewById(R.id.user_nick_name);
         passwordET = (EditText) findViewById(R.id.user_password);
-        surnameET = (EditText) findViewById(R.id.user_username);
+        usernameET = (EditText) findViewById(R.id.user_username);
         checkPasswordET = (EditText) findViewById(R.id.user_password_comp);
 
     }
@@ -82,12 +82,14 @@ public class RegisterPanel extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(mail, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     private static final String TAG = "";
-
+                    FirebaseUser user = mAuth.getCurrentUser();
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
+                            user.sendEmailVerification();
+                            Toast.makeText(RegisterPanel.this, "Email de verificacion enviado", Toast.LENGTH_SHORT).show();
                             HideLoadingAnimation();
                             Intent intent = new Intent(RegisterPanel.this, MainActivity.class);
                             startActivity(intent);
@@ -105,7 +107,7 @@ public class RegisterPanel extends AppCompatActivity {
     }
 
     private void SetInfo(){
-        String username = apodoET.getText().toString() + " " + surnameET.getText().toString();
+        String username = usernameET.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             // User is signed in
@@ -165,18 +167,16 @@ public class RegisterPanel extends AppCompatActivity {
 
     private void addToDatabase(){
         String mail = emailET.getText().toString().replace("."," ");
-        String name = apodoET.getText().toString() + " " + surnameET.getText().toString();
+        String nickname = apodoET.getText().toString();
+        String username = usernameET.getText().toString();
         //Toast.makeText(RegisterScreen.this, mail, Toast.LENGTH_LONG).show();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
 
         //Toast.makeText(RegisterScreen.this, "in ondatachange", Toast.LENGTH_LONG).show();
         Log.e("database: ", "start database fill");
 
-        myRef.child(mail).child("Datos").child("Name").setValue(name);
-        myRef.child(mail).child("Datos").child("NickName").setValue("NickName");
-        myRef.child(mail).child("Datos").child("Rank").setValue("Member");
-
-        myRef.child(mail).child("Datos").child("Adress").setValue("The Viking Inn");
+        myRef.child(mail).child("Datos").child("Name").setValue(username);
+        myRef.child(mail).child("Datos").child("NickName").setValue(nickname);
         Log.e("database: ", "finish database fill");
 
     }
