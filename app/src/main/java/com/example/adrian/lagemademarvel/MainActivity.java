@@ -25,14 +25,15 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         FavMenuFragment.OnFragmentInteractionListener,
-        NewsViewFragment.OnFragmentInteractionListener,
+        NewsFragment.OnFragmentInteractionListener,
         PersonalProfileFragment.OnFragmentInteractionListener,
         CharacterViewFragment.OnFragmentInteractionListener,
         ComicViewFragment.OnFragmentInteractionListener,
         MapsFragment.OnFragmentInteractionListener,
         NewsMenuFragment.OnFragmentInteractionListener,
         AccessDeniedFragment.OnFragmentInteractionListener,
-        ComicSearchFragment.OnFragmentInteractionListener{
+        ComicSearchFragment.OnFragmentInteractionListener,
+        NewsItemFragment.OnFragmentInteractionListener{
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     FirebaseAuth mAuth;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
 
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_frame, new NewsMenuFragment()).commit();
+            fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
         }else{
             Toast.makeText(MainActivity.this, "No internet connection, please check connection and reload the app!", Toast.LENGTH_LONG).show();
             FragmentManager fm = getFragmentManager();
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity
                 switch (item.getItemId()) {
 
                     case R.id.nav_news:
-                       fm.beginTransaction().replace(R.id.content_frame, new NewsViewFragment()).commit();
+                       fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
                         setTitle(getString(R.string.app_title));
                         break;
 

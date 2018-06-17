@@ -29,7 +29,7 @@ public class NewsConnection {
 
 
         try {
-            URL requestURL = new URL("https://battle-gaming-agenda.firebaseio.com/.json?auth="+idToken);
+            URL requestURL = new URL("https://proyecto-marvel.firebaseio.com/.json?auth="+idToken);
 
             urlConnection = (HttpURLConnection) requestURL.openConnection();
             urlConnection.setRequestMethod("GET");
