@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity
         ComicViewFragment.OnFragmentInteractionListener,
         MapsFragment.OnFragmentInteractionListener,
         NewsMenuFragment.OnFragmentInteractionListener,
-        AccessDeniedFragment.OnFragmentInteractionListener{
+        AccessDeniedFragment.OnFragmentInteractionListener,
+        ComicSearchFragment.OnFragmentInteractionListener{
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     FirebaseAuth mAuth;
@@ -117,36 +118,36 @@ public class MainActivity extends AppCompatActivity
                         break;
 
                     case R.id.nav_profile:
-                        fm.beginTransaction().replace(R.id.content_frame, new PersonalProfileFragment()).commit();
+                        fm.beginTransaction().replace(R.id.content_frame, new PersonalProfileFragment()).addToBackStack(null).commit();
                         setTitle(getString(R.string.app_title));
                         break;
 
                     case R.id.nav_stores:
-                        fm.beginTransaction().replace(R.id.content_frame, new MapsFragment()).commit();
+                        fm.beginTransaction().replace(R.id.content_frame, new MapsFragment()).addToBackStack(null).commit();
                         setTitle(getString(R.string.app_title));
 
                         break;
 
                     case R.id.nav_characters:
-                        fm.beginTransaction().replace(R.id.content_frame, new CharacterViewFragment()).commit();
+                        fm.beginTransaction().replace(R.id.content_frame, new CharacterViewFragment()).addToBackStack(null).commit();
                         setTitle("Nombre del personaje");
 
                         break;
 
                     case R.id.nav_comics:
-                        fm.beginTransaction().replace(R.id.content_frame, new ComicViewFragment()).commit();
+                        fm.beginTransaction().replace(R.id.content_frame, new ComicSearchFragment()).addToBackStack(null).commit();
                         setTitle("Nombre del comic");
 
                         break;
 
                     case R.id.nav_fav_characters:
-                        fm.beginTransaction().replace(R.id.content_frame, new FavMenuFragment()).commit();
+                        fm.beginTransaction().replace(R.id.content_frame, new FavMenuFragment()).addToBackStack(null).commit();
                         setTitle("Personajes Favoritos");
 
                         break;
 
                     case R.id.nav_fav_comics:
-                        fm.beginTransaction().replace(R.id.content_frame, new FavMenuFragment()).commit();
+                        fm.beginTransaction().replace(R.id.content_frame, new FavMenuFragment()).addToBackStack(null).commit();
                         setTitle("Comics Favoritos");
 
                         break;
