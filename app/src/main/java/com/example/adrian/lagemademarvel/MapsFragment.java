@@ -1,5 +1,7 @@
 package com.example.adrian.lagemademarvel;
 
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -62,10 +64,19 @@ public class MapsFragment extends android.app.Fragment {
         promote = view.findViewById(R.id.promocionarse);
         promotion = view.findViewById(R.id.store_promotion);
 
-        promotion.setOnClickListener(new View.OnClickListener() {
+        promote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        promote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment cp = new createPromotion();
+                android.app.FragmentManager fm = (getActivity()).getFragmentManager();
+                cp.show(fm, "boom");
             }
         });
 

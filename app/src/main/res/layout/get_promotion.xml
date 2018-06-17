@@ -27,6 +27,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -52,10 +53,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
 
+                    android:gravity="center"
                     android:text="Direccion:"
                     android:textColor="@color/White"
                     android:textSize="18sp"
-                    android:gravity="center"
                     app:layout_constraintStart_toEndOf="@+id/imagencomic"
                     tools:layout_editor_absoluteY="35dp" />
 
@@ -64,10 +65,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
 
+                    android:gravity="center"
                     android:text="Correo Electronico:"
                     android:textColor="@color/White"
                     android:textSize="18sp"
-                    android:gravity="center"
                     app:layout_constraintStart_toEndOf="@+id/imagencomic"
                     tools:layout_editor_absoluteY="67dp" />
 
@@ -77,10 +78,10 @@
                     android:layout_height="40dp"
 
 
+                    android:gravity="center"
                     android:text="Telefono:"
                     android:textColor="@color/White"
                     android:textSize="18sp"
-                    android:gravity="center"
                     app:layout_constraintStart_toEndOf="@+id/imagencomic"
                     app:layout_constraintTop_toBottomOf="@+id/fav_button" />
 
@@ -314,7 +315,18 @@
                     android:textColor="@color/BlancoRoto" />
 
             </LinearLayout>
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Promocioname!"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
     </android.support.constraint.ConstraintLayout>

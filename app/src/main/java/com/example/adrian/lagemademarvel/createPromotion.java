@@ -52,10 +52,10 @@ public class createPromotion extends DialogFragment implements AdapterView.OnIte
         // Use the Builder class for convenient dialog construction
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        id = getArguments().getString("ID");
+        //id = getArguments().getString("ID");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.view_comic, null);
-        title = view.findViewById(R.id.comic_name);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.create_promotion, null);
+        /*title = view.findViewById(R.id.comic_name);
         character = view.findViewById(R.id.NombrePersonajeComic);
         desc = view.findViewById(R.id.descripcioncomic);
         cover = view.findViewById(R.id.imagencomic);
@@ -114,7 +114,7 @@ public class createPromotion extends DialogFragment implements AdapterView.OnIte
             fav.setImageResource(R.drawable.star_on);
             new FavFetcher(title, desc, cover, id, getActivity(), 1).execute();
             character.setText("Data provided by Marvel. © 2018 MARVEL");
-        }
+        }*/
 
         builder.setView(view);
         final AlertDialog alert = builder.create();
