@@ -134,9 +134,11 @@ public class CharacterViewFragment extends android.app.Fragment {
 
                         if (!printed) {
                             if(messages == null){
-                                myRef.child("0").setValue(id.getText());
+                                myRef.child("0").child("ID").setValue(id.getText());
+                                myRef.child("0").child("Name").setValue(charName.getText());
                             }else {
-                                myRef.child("" + messages.size()).setValue(id.getText());
+                                myRef.child("" + messages.size()).child("ID").setValue(id.getText());
+                                myRef.child("" + messages.size()).child("Name").setValue(charName.getText());
                             }
 
                             printed = true;

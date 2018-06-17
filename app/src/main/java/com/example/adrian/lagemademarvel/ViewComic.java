@@ -86,9 +86,11 @@ public class ViewComic extends DialogFragment implements AdapterView.OnItemSelec
 
                         if (!printed) {
                             if(messages == null){
-                                myRef.child("0").setValue(getArguments().getString("ID"));
+                                myRef.child("0").child("ID").setValue(getArguments().getString("ID"));
+                                myRef.child("0").child("Title").setValue(getArguments().getString("Title"));
                             }else {
-                                myRef.child("" + messages.size()).setValue(getArguments().getString("ID"));
+                                myRef.child("" + messages.size()).child("ID").setValue(getArguments().getString("ID"));
+                                myRef.child("" + messages.size()).child("Title").setValue(getArguments().getString("Title"));
                             }
 
                             printed = true;

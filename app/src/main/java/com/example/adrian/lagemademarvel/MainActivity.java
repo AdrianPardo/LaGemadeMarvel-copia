@@ -130,13 +130,13 @@ public class MainActivity extends AppCompatActivity
 
                     case R.id.nav_characters:
                         fm.beginTransaction().replace(R.id.content_frame, new CharacterViewFragment()).addToBackStack(null).commit();
-                        setTitle("Nombre del personaje");
+                        setTitle("Personajes");
 
                         break;
 
                     case R.id.nav_comics:
                         fm.beginTransaction().replace(R.id.content_frame, new ComicSearchFragment()).addToBackStack(null).commit();
-                        setTitle("Nombre del comic");
+                        setTitle("Comics");
 
                         break;
 
