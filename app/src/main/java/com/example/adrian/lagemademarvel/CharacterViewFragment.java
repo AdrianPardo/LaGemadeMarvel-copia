@@ -17,8 +17,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.Response;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 
 /**
@@ -38,10 +48,14 @@ public class CharacterViewFragment extends android.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ImageView searchBTN, charImg;
+    ImageView searchBTN, charImg, fav;
     EditText searchBar;
-    TextView charName, copyright, charDesc;
+    TextView charName, copyright, charDesc, id;
     RecyclerView rv;
+    FirebaseUser user;
+    FirebaseAuth mAuth;
+    DatabaseReference myRef;
+    boolean printed = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,6 +88,8 @@ public class CharacterViewFragment extends android.app.Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     @Override
@@ -88,13 +104,54 @@ public class CharacterViewFragment extends android.app.Fragment {
         charDesc = view.findViewById(R.id.descripcionpersonaje);
         charImg= view.findViewById(R.id.imagenpersonaje);
         rv = view.findViewById(R.id.character_comics);
+        fav = view.findViewById(R.id.fav_button);
+        id = view.findViewById(R.id.charID);
+        id.setVisibility(View.GONE);
 
         searchBTN = view.findViewById(R.id.Search_char_btn);
         searchBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CharacterConnection(charName, charDesc, copyright, searchBar.getText().toString(), getActivity(), charImg, rv).execute();
+                new CharacterConnection(charName, charDesc, copyright, searchBar.getText().toString(), getActivity(), charImg, rv, id).execute();
                 Log.e("in onclick", "Buscando....");
+            }
+        });
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fav.setImageResource(R.drawable.star_on);
+                String mail = user.getEmail().replace("."," ");
+                Log.e("Email", ""+mail);
+                myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Favoritos/Personajes");
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        GenericTypeIndicator<List<Object>> t = new GenericTypeIndicator<List<Object>>() {
+                        };
+                        List messages = snapshot.getValue(t);
+
+                        if (!printed) {
+                            if(messages == null){
+                                myRef.child("0").setValue(id.getText());
+                            }else {
+                                myRef.child("" + messages.size()).setValue(id.getText());
+                            }
+
+                            printed = true;
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+
+
             }
         });
 

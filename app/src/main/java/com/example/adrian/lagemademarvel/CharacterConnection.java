@@ -31,9 +31,10 @@ public class CharacterConnection extends AsyncTask<Void, Void, String> {
     private ImageView charImg;
     private ArrayList<String> comics = new ArrayList<>();
     private RecyclerView comicRV;
+    private TextView id;
 
 
-    CharacterConnection(TextView nameTV, TextView descTV, TextView cpr, String charStr, Context ctx, ImageView img, RecyclerView rv){
+    CharacterConnection(TextView nameTV, TextView descTV, TextView cpr, String charStr, Context ctx, ImageView img, RecyclerView rv, TextView charID){
         name=nameTV;
         desc=descTV;
         character=charStr;
@@ -41,7 +42,7 @@ public class CharacterConnection extends AsyncTask<Void, Void, String> {
         context = ctx;
         charImg = img;
         comicRV = rv;
-
+        id=charID;
     }
 
     protected String doInBackground(Void... urls) {
@@ -101,6 +102,7 @@ public class CharacterConnection extends AsyncTask<Void, Void, String> {
                 Log.e("name", ""+jo.getString("name"));
                 Log.e("desc", ""+jo.getString("description"));
                 Picasso.with(context).load(jo.getJSONObject("thumbnail").getString("path")+"."+jo.getJSONObject("thumbnail").getString("extension")).into(charImg);
+                id.setText(jo.getString("id"));
 
                 JSONArray array2 = jo.getJSONObject("comics").getJSONArray("items");
                 test2 = array2.length();

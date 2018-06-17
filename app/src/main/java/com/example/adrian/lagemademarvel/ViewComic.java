@@ -68,6 +68,7 @@ public class ViewComic extends DialogFragment implements AdapterView.OnItemSelec
         character .setText(getArguments().getString("MainChar"));
         desc.setText(getArguments().getString("Desc"));
         Picasso.with(getActivity()).load(getArguments().getString("Image")).into(cover);
+
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
