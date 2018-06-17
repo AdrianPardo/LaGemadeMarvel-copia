@@ -4,9 +4,24 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 
 /**
@@ -26,6 +41,13 @@ public class PersonalProfileFragment extends android.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    EditText nombre, apodo;
+    TextView correo;
+    Button save;
+    FirebaseUser user;
+    FirebaseAuth mAuth;
+    DatabaseReference myRef;
+    boolean printed = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,13 +80,39 @@ public class PersonalProfileFragment extends android.app.Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_personal_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
+        nombre = view.findViewById(R.id.profile_edit_name);
+        SetData(nombre, "Name");
+        apodo = view.findViewById(R.id.profile_edit_nickname);
+        SetData(apodo, "NickName");
+        correo = view.findViewById(R.id.profile_edit_email);
+        correo.setText(user.getEmail());
+        save = view.findViewById(R.id.profile_save_button);
+
+
+
+
+
+
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mail = user.getEmail().replace(".", " ");
+                myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Datos");
+                myRef.child("Name").setValue(nombre.getText().toString());
+                myRef.child("NickName").setValue(apodo.getText().toString());
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +153,26 @@ public class PersonalProfileFragment extends android.app.Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void SetData(final EditText field,final String source){
+        printed = false;
+        String mail = user.getEmail().replace(".", " ");
+        myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Datos/"+source);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String str = snapshot.getValue(String.class);
+                Log.e("str", ""+str);
+                Log.e("printed", ""+printed);
+
+                field.setText(str);
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
 }
