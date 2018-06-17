@@ -63,51 +63,61 @@ public class ViewComic extends DialogFragment implements AdapterView.OnItemSelec
         desc = view.findViewById(R.id.descripcioncomic);
         cover = view.findViewById(R.id.imagencomic);
         fav = view.findViewById(R.id.fav_button);
+        Log.e("Type", ""+getArguments().getInt("Type"));
+        if(getArguments().get("Type") == null) {
+            title.setText(getArguments().getString("Title"));
+            character.setText(getArguments().getString("MainChar"));
+            desc.setText(getArguments().getString("Desc"));
+            Picasso.with(getActivity()).load(getArguments().getString("Image")).into(cover);
 
-        title.setText(getArguments().getString("Title"));
-        character .setText(getArguments().getString("MainChar"));
-        desc.setText(getArguments().getString("Desc"));
-        Picasso.with(getActivity()).load(getArguments().getString("Image")).into(cover);
+            fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fav.setImageResource(R.drawable.star_on);
+                    String mail = user.getEmail().replace(".", " ");
+                    Log.e("Email", "" + mail);
+                    myRef = FirebaseDatabase.getInstance().getReference("usuarios/" + mail + "/Favoritos/Comics");
 
-        fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fav.setImageResource(R.drawable.star_on);
-                String mail = user.getEmail().replace("."," ");
-                Log.e("Email", ""+mail);
-                myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Favoritos/Comics");
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            GenericTypeIndicator<List<Object>> t = new GenericTypeIndicator<List<Object>>() {
+                            };
+                            List messages = snapshot.getValue(t);
 
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        GenericTypeIndicator<List<Object>> t = new GenericTypeIndicator<List<Object>>() {
-                        };
-                        List messages = snapshot.getValue(t);
+                            if (!printed) {
+                                if (messages == null) {
+                                    myRef.child("0").child("ID").setValue(getArguments().getString("ID"));
+                                    myRef.child("0").child("Name").setValue(getArguments().getString("Title"));
+                                } else {
+                                    myRef.child("" + messages.size()).child("ID").setValue(getArguments().getString("ID"));
+                                    myRef.child("" + messages.size()).child("Name").setValue(getArguments().getString("Title"));
+                                }
 
-                        if (!printed) {
-                            if(messages == null){
-                                myRef.child("0").child("ID").setValue(getArguments().getString("ID"));
-                                myRef.child("0").child("Title").setValue(getArguments().getString("Title"));
-                            }else {
-                                myRef.child("" + messages.size()).child("ID").setValue(getArguments().getString("ID"));
-                                myRef.child("" + messages.size()).child("Title").setValue(getArguments().getString("Title"));
+                                printed = true;
                             }
-
-                            printed = true;
                         }
-                    }
 
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
+                        }
 
-                });
+                    });
 
 
-            }
-        });
+                }
+            });
+        }else if(getArguments().getInt("Type") == 0){
+            fav.setImageResource(R.drawable.star_on);
+            new FavFetcher(title, desc, cover, id, getActivity(), 0).execute();
+            character.setText("Data provided by Marvel. © 2018 MARVEL");
+        }else if(getArguments().getInt("Type") == 1){
+            fav.setImageResource(R.drawable.star_on);
+            new FavFetcher(title, desc, cover, id, getActivity(), 1).execute();
+            character.setText("Data provided by Marvel. © 2018 MARVEL");
+        }
 
         builder.setView(view);
         final AlertDialog alert = builder.create();

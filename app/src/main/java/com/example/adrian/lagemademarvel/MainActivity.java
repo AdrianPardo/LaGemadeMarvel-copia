@@ -141,13 +141,21 @@ public class MainActivity extends AppCompatActivity
                         break;
 
                     case R.id.nav_fav_characters:
-                        fm.beginTransaction().replace(R.id.content_frame, new FavMenuFragment()).addToBackStack(null).commit();
+                        FavMenuFragment fmf = new FavMenuFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("Type", 0);
+                        fmf.setArguments(bundle);
+                        fm.beginTransaction().replace(R.id.content_frame, fmf).addToBackStack(null).commit();
                         setTitle("Personajes Favoritos");
 
                         break;
 
                     case R.id.nav_fav_comics:
-                        fm.beginTransaction().replace(R.id.content_frame, new FavMenuFragment()).addToBackStack(null).commit();
+                        FavMenuFragment fmf2 = new FavMenuFragment();
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putInt("Type", 1);
+                        fmf2.setArguments(bundle2);
+                        fm.beginTransaction().replace(R.id.content_frame, fmf2).addToBackStack(null).commit();
                         setTitle("Comics Favoritos");
 
                         break;
