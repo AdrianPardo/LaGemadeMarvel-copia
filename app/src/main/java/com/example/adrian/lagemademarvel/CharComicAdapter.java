@@ -1,6 +1,7 @@
 package com.example.adrian.lagemademarvel;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,12 @@ public class CharComicAdapter extends RecyclerView.Adapter<CharComicAdapter.myVi
 
     public CharComicAdapter(List<String> passedListItem) {
         this.comicList = passedListItem;
+        Log.e("test", "inside adapter");
     }
 
     @Override
     public CharComicAdapter.myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e("test", "inside on create view holder");
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.char_comic, parent, false);
         CharComicAdapter.myViewHolder holder = new CharComicAdapter.myViewHolder(itemView);
@@ -30,6 +33,7 @@ public class CharComicAdapter extends RecyclerView.Adapter<CharComicAdapter.myVi
     @Override
     public void onBindViewHolder(CharComicAdapter.myViewHolder holder, int position) {
         int itemNumber = position + 1;
+        Log.e("viewholder", ""+comicList.get(position));
         holder.itemTextView.setText(comicList.get(position));
     }
 
@@ -40,6 +44,7 @@ public class CharComicAdapter extends RecyclerView.Adapter<CharComicAdapter.myVi
 
     public class myViewHolder extends RecyclerView.ViewHolder {
         TextView itemTextView;
+
 
         public myViewHolder(View view) {
             super(view);

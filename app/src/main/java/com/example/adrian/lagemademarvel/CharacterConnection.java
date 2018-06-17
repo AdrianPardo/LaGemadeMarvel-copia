@@ -2,6 +2,7 @@ package com.example.adrian.lagemademarvel;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
@@ -109,8 +110,11 @@ public class CharacterConnection extends AsyncTask<Void, Void, String> {
                     Log.e("comic", ""+jo2.getString("name"));
                 }
             }
+            Log.e("test", "before adapter");
+            comicRV.setLayoutManager(new LinearLayoutManager(context));
             CharComicAdapter ccAdapter = new CharComicAdapter(comics);
             comicRV.setAdapter(ccAdapter);
+            Log.e("test", "after adapter");
 
         } catch (JSONException je){
             je.printStackTrace();
