@@ -1,5 +1,6 @@
 package com.example.adrian.lagemademarvel;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +82,10 @@ public class NewsFragment extends android.app.Fragment {
             mScreen = view.findViewById(R.id.myScreen);
             //mScreen.setBackgroundColor(getBackgroundColor());
             new NewsFetcher(mRecyclerView, getActivity()).execute();
+        }else{
+            Toast.makeText(getActivity(), "No hay conexion, comprueba tu conexion a internet!", Toast.LENGTH_LONG).show();
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.content_frame, new NoConnectionFragment()).commit();
         }
         return view;
     }

@@ -44,39 +44,44 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+
 
         IsConnected();
 
         if(isConnected) {
+            mAuth = FirebaseAuth.getInstance();
+            user = mAuth.getCurrentUser();
             setContentView(R.layout.activity_main);
 
             Log.e("verified", ""+ user.isEmailVerified());
+            if(user.isEmailVerified()) {
+                if (user != null) {
 
-            if (user != null) {
+                } else {
+                    Intent intent = new Intent(this, LoginPanel.class);
+                    startActivity(intent);
+                }
 
-            } else {
-                Intent intent = new Intent(this, LoginPanel.class);
-                startActivity(intent);
+                Toolbar toolbar = findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                drawer.addDrawerListener(toggle);
+                toggle.syncState();
+
+                NavigationView navigationView = findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(this);
+
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
+            }else{
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame, new AccessDeniedFragment()).commit();
             }
-
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-
-            NavigationView navigationView = findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-
-            FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
         }else{
-            Toast.makeText(MainActivity.this, "No internet connection, please check connection and reload the app!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "No hay conexion, comprueba tu conexion a internet!", Toast.LENGTH_LONG).show();
             FragmentManager fm = getFragmentManager();
             fm.beginTransaction().replace(R.id.content_frame, new NoConnectionFragment()).commit();
         }
@@ -106,74 +111,81 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, RegisterPanel.class);
             startActivity(intent);
         }*/
+        IsConnected();
 
-        final android.app.FragmentManager fm = getFragmentManager();
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                switch (item.getItemId()) {
+        if(isConnected) {
+            final android.app.FragmentManager fm = getFragmentManager();
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    switch (item.getItemId()) {
 
-                    case R.id.nav_news:
-                       fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
-                        setTitle(getString(R.string.app_title));
-                        break;
+                        case R.id.nav_news:
+                           fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
+                            setTitle(getString(R.string.app_title));
+                            break;
 
-                    case R.id.nav_profile:
-                        fm.beginTransaction().replace(R.id.content_frame, new PersonalProfileFragment()).addToBackStack(null).commit();
-                        setTitle(getString(R.string.app_title));
-                        break;
+                        case R.id.nav_profile:
+                            fm.beginTransaction().replace(R.id.content_frame, new PersonalProfileFragment()).addToBackStack(null).commit();
+                            setTitle(getString(R.string.app_title));
+                            break;
 
-                    case R.id.nav_stores:
-                        fm.beginTransaction().replace(R.id.content_frame, new MapsFragment()).addToBackStack(null).commit();
-                        setTitle(getString(R.string.app_title));
+                        case R.id.nav_stores:
+                            fm.beginTransaction().replace(R.id.content_frame, new MapsFragment()).addToBackStack(null).commit();
+                            setTitle(getString(R.string.app_title));
 
-                        break;
+                            break;
 
-                    case R.id.nav_characters:
-                        fm.beginTransaction().replace(R.id.content_frame, new CharacterViewFragment()).addToBackStack(null).commit();
-                        setTitle("Personajes");
+                        case R.id.nav_characters:
+                            fm.beginTransaction().replace(R.id.content_frame, new CharacterViewFragment()).addToBackStack(null).commit();
+                            setTitle("Personajes");
 
-                        break;
+                            break;
 
-                    case R.id.nav_comics:
-                        fm.beginTransaction().replace(R.id.content_frame, new ComicSearchFragment()).addToBackStack(null).commit();
-                        setTitle("Comics");
+                        case R.id.nav_comics:
+                            fm.beginTransaction().replace(R.id.content_frame, new ComicSearchFragment()).addToBackStack(null).commit();
+                            setTitle("Comics");
 
-                        break;
+                            break;
 
-                    case R.id.nav_fav_characters:
-                        FavMenuFragment fmf = new FavMenuFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("Type", 0);
-                        fmf.setArguments(bundle);
-                        fm.beginTransaction().replace(R.id.content_frame, fmf).addToBackStack(null).commit();
-                        setTitle("Personajes Favoritos");
+                        case R.id.nav_fav_characters:
+                            FavMenuFragment fmf = new FavMenuFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("Type", 0);
+                            fmf.setArguments(bundle);
+                            fm.beginTransaction().replace(R.id.content_frame, fmf).addToBackStack(null).commit();
+                            setTitle("Personajes Favoritos");
 
-                        break;
+                            break;
 
-                    case R.id.nav_fav_comics:
-                        FavMenuFragment fmf2 = new FavMenuFragment();
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putInt("Type", 1);
-                        fmf2.setArguments(bundle2);
-                        fm.beginTransaction().replace(R.id.content_frame, fmf2).addToBackStack(null).commit();
-                        setTitle("Comics Favoritos");
+                        case R.id.nav_fav_comics:
+                            FavMenuFragment fmf2 = new FavMenuFragment();
+                            Bundle bundle2 = new Bundle();
+                            bundle2.putInt("Type", 1);
+                            fmf2.setArguments(bundle2);
+                            fm.beginTransaction().replace(R.id.content_frame, fmf2).addToBackStack(null).commit();
+                            setTitle("Comics Favoritos");
 
-                        break;
+                            break;
 
-                    case R.id.nav_LogOut:
-                        mAuth.signOut();
-                        Intent intent = new Intent(MainActivity.this, RegisterPanel.class);
-                        startActivity(intent);
-                        break;
+                        case R.id.nav_LogOut:
+                            mAuth.signOut();
+                            Intent intent = new Intent(MainActivity.this, RegisterPanel.class);
+                            startActivity(intent);
+                            break;
 
-                    default:
+                        default:
+                    }
                 }
-            }
 
 
-        }, 50);
+            }, 50);
+        }else{
+            Toast.makeText(MainActivity.this, "No hay conexion, comprueba tu conexion a internet!", Toast.LENGTH_LONG).show();
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.content_frame, new NoConnectionFragment()).commit();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
