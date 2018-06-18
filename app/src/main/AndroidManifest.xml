@@ -18,10 +18,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginPanel"
+            android:screenOrientation="portrait"
             android:label="@string/login_panel" />
         <activity
             android:name=".RegisterPanel"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="@string/app_title"
             android:theme="@style/AppTheme">
             <intent-filter>

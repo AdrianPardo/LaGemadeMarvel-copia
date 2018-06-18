@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         NewsMenuFragment.OnFragmentInteractionListener,
         AccessDeniedFragment.OnFragmentInteractionListener,
         ComicSearchFragment.OnFragmentInteractionListener,
+        NoConnectionFragment.OnFragmentInteractionListener,
         NewsItemFragment.OnFragmentInteractionListener{
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         }else{
             Toast.makeText(MainActivity.this, "No internet connection, please check connection and reload the app!", Toast.LENGTH_LONG).show();
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_frame, new NewsMenuFragment()).commit();
+            fm.beginTransaction().replace(R.id.content_frame, new NoConnectionFragment()).commit();
         }
     }
 
