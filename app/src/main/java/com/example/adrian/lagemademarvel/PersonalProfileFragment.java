@@ -1,6 +1,7 @@
 package com.example.adrian.lagemademarvel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,11 +84,13 @@ public class PersonalProfileFragment extends android.app.Fragment {
         }
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
         nombre = view.findViewById(R.id.profile_edit_name);
         SetData(nombre, "Name");
@@ -96,19 +100,23 @@ public class PersonalProfileFragment extends android.app.Fragment {
         correo.setText(user.getEmail());
         save = view.findViewById(R.id.profile_save_button);
 
-
-
-
-
-
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String mail = user.getEmail().replace(".", " ");
-                myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Datos");
-                myRef.child("Name").setValue(nombre.getText().toString());
-                myRef.child("NickName").setValue(apodo.getText().toString());
+                if (view.getId() == R.id.profile_save_button) {
+                    myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Datos");
+                    myRef.child("Name").setValue(nombre.getText().toString());
+                    myRef.child("NickName").setValue(apodo.getText().toString());
+
+                }else{
+
+                    String[] to = { "adrianp.97@hotmail.es" };
+                    String[] cc = { "adrianp.97@hotmail.es" };
+                    enviarEmail(to, cc, "Cuenta comercial",
+                            "El usuario: "+mail+", desea cambiar su tipo de cuenta a comercial");
+                }
+
             }
         });
 
@@ -138,6 +146,8 @@ public class PersonalProfileFragment extends android.app.Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -173,6 +183,22 @@ public class PersonalProfileFragment extends android.app.Fragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    public void enviarEmail(String[] to, String[] cc, String asunto, String mensaje) {
+        String mail = user.getEmail().replace(".", " ");
+
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setData(Uri.parse("mailto:"));
+            //String[] to = direccionesEmail;
+            //String[] cc = copias;
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+            emailIntent.putExtra(Intent.EXTRA_CC, cc);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, asunto);
+            emailIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
+            emailIntent.setType("message/rfc822");
+            startActivity(Intent.createChooser(emailIntent, "Email "));
+
     }
 
 }

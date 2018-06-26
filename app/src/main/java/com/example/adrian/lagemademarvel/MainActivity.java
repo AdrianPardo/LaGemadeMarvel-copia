@@ -123,17 +123,17 @@ public class MainActivity extends AppCompatActivity
 
                         case R.id.nav_news:
                            fm.beginTransaction().replace(R.id.content_frame, new NewsFragment()).commit();
-                            setTitle(getString(R.string.app_title));
+                            setTitle("Noticias");
                             break;
 
                         case R.id.nav_profile:
                             fm.beginTransaction().replace(R.id.content_frame, new PersonalProfileFragment()).addToBackStack(null).commit();
-                            setTitle(getString(R.string.app_title));
+                            setTitle("Perfil");
                             break;
 
                         case R.id.nav_stores:
                             fm.beginTransaction().replace(R.id.content_frame, new MapsFragment()).addToBackStack(null).commit();
-                            setTitle(getString(R.string.app_title));
+                            setTitle("Tiendas");
 
                             break;
 

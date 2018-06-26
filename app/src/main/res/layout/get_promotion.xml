@@ -5,7 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/DarkGrey">
+    android:background="@color/DarkGrey"
+    android:label="@string/label_promocionate" >
 
     <TextView
         android:id="@+id/comic_name"
@@ -80,18 +81,6 @@
 
                     android:gravity="center"
                     android:text="Telefono:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic4"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-
-
-                    android:gravity="center"
                     android:textColor="@color/White"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/imagencomic"
@@ -231,18 +220,6 @@
                     android:inputType="textPersonName"
                     android:text="Name"
                     android:textColor="@color/BlancoRoto" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic5"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-
-
-                    android:gravity="center"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
 
                 <EditText
                     android:id="@+id/lunes"

@@ -11,7 +11,7 @@
         android:id="@+id/comic_name"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/DarkGrey"
         android:paddingLeft="10px"
         android:paddingRight="10px"
         android:contentDescription="comic name"

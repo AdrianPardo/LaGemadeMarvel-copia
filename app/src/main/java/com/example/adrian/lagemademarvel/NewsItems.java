@@ -1,8 +1,5 @@
 package com.example.adrian.lagemademarvel;
 
-/**
- * Created by i7-4770 on 25/02/2018.
- */
 
 public class NewsItems {
 

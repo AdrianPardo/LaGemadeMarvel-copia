@@ -24,6 +24,7 @@ public class RegisterPanel extends AppCompatActivity {
     private String email, password;
     private EditText usernameET, apodoET, emailET, passwordET, checkPasswordET;
     boolean inserted = false;
+    boolean comercial= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +178,7 @@ public class RegisterPanel extends AppCompatActivity {
 
         myRef.child(mail).child("Datos").child("Name").setValue(username);
         myRef.child(mail).child("Datos").child("NickName").setValue(nickname);
+        myRef.child(mail).child("Comercial").child("UsoComercial").setValue(comercial);
         Log.e("database: ", "finish database fill");
 
     }

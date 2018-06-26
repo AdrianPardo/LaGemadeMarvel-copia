@@ -16,12 +16,12 @@ import com.google.firebase.auth.FirebaseUser;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewsMenuFragment.OnFragmentInteractionListener} interface
+ * {@link MapsMenuFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewsMenuFragment#newInstance} factory method to
+ * Use the {@link MapsMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewsMenuFragment extends android.app.Fragment {
+public class MapsMenuFragment extends android.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,7 +35,7 @@ public class NewsMenuFragment extends android.app.Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public NewsMenuFragment() {
+    public MapsMenuFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +45,11 @@ public class NewsMenuFragment extends android.app.Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsMenuFragment.
+     * @return A new instance of fragment MapsMenuFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewsMenuFragment newInstance(String param1, String param2) {
-        NewsMenuFragment fragment = new NewsMenuFragment();
+    public static MapsMenuFragment newInstance(String param1, String param2) {
+        MapsMenuFragment fragment = new MapsMenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,7 +70,7 @@ public class NewsMenuFragment extends android.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Verified();
-        return inflater.inflate(R.layout.fragment_news_menu, container, false);
+        return inflater.inflate(R.layout.fragment_maps_menu, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -18,22 +18,20 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class NewsItemsAdapter extends
-        RecyclerView.Adapter<NewsItemsAdapter.WordViewHolder>  {
-    private final List<NewsItems> newsList;
+public class MapsItemsAdapter extends
+        RecyclerView.Adapter<MapsItemsAdapter.WordViewHolder>  {
+    private final List<MapsItems> mapsList;
     private LayoutInflater mInflater;
     private SharedPreferences prefs;
     private Context context;
 
     class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        final TextView newsItemView;
-        final ImageView newsImage;
-        final NewsItemsAdapter nAdapter;
+        final TextView mapsItemView;
+        final MapsItemsAdapter nAdapter;
 
-        WordViewHolder(View itemView, NewsItemsAdapter adapter) {
+        WordViewHolder(View itemView, MapsItemsAdapter adapter) {
             super(itemView);
-            newsItemView = itemView.findViewById(R.id.NewsTitle);
-            newsImage = itemView.findViewById(R.id.newsFoto);
+            mapsItemView = itemView.findViewById(R.id.MapsName);
             this.nAdapter = adapter;
             itemView.setOnClickListener(this);
         }
@@ -41,21 +39,22 @@ public class NewsItemsAdapter extends
         @Override
         public void onClick(View view) {
             int mPosition = getLayoutPosition();
-            NewsItems element = newsList.get(mPosition);
+            MapsItems element = mapsList.get(mPosition);
             Bundle bundle = new Bundle();
-            bundle.putString("Title",element.getNewsTitle());
-            bundle.putString("Article",element.getNewsInfo());
-            bundle.putString("Image",element.getImage());
-            bundle.putString("Date",element.getDate());
-            NewsItemFragment nif = new NewsItemFragment();
+            bundle.putString("Nombre",element.getMapsName());
+            bundle.putString("Direccion",element.getMapsdirec());
+            bundle.putString("Email",element.getMapsEmail());
+            bundle.putString("Telefono",element.getMapsTelefono());
+            bundle.putString("Horario",element.getMapsHora());
+            MapsItemFragment nif = new MapsItemFragment();
             nif.setArguments(bundle);
 
             android.app.FragmentManager fm = ((Activity) context).getFragmentManager();
             /*FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.content_frame, nif);
-            ft.addToBackStack("NewsItem");
+            ft.addToBackStack("MapsItem");
             ft.commit();*/
-            fm.beginTransaction().replace(R.id.content_frame, nif).addToBackStack("NewsItem").commit();
+            fm.beginTransaction().replace(R.id.content_frame, nif).addToBackStack("MapsItem").commit();
             //test=element.getDayInfo()+"Clicked!";
             //element.setDayInfo(test);
             //cAdapter.notifyDataSetChanged();
@@ -63,11 +62,11 @@ public class NewsItemsAdapter extends
         }
     }
     @Override
-    public NewsItemsAdapter.WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MapsItemsAdapter.WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         prefs = parent.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        View mItemView = mInflater.inflate(R.layout.news_items, parent, false);
-        TextView newsTitle = mItemView.findViewById(R.id.NewsTitle);
-        newsTitle.setTextColor(getTextColor());
+        View mItemView = mInflater.inflate(R.layout.maps_items, parent, false);
+        TextView mapsName = mItemView.findViewById(R.id.MapsName);
+        mapsName.setTextColor(getTextColor());
         context=parent.getContext();
         return new WordViewHolder(mItemView, this);
     }
@@ -77,26 +76,23 @@ public class NewsItemsAdapter extends
         if (view == null) {
             view = new ImageView(context);
         }
-        final NewsItems newsItems = newsList.get(position);
-        Picasso.with(context).load(newsItems.getImage()).into(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsItemsAdapter.WordViewHolder holder, int position) {
-        final NewsItems newsItems = newsList.get(position);
-        holder.newsItemView.setText(newsItems.getNewsTitle());
-        Log.e("News Title",newsItems.getNewsTitle());
-        getView(position, holder.newsImage);
+    public void onBindViewHolder(MapsItemsAdapter.WordViewHolder holder, int position) {
+        final MapsItems mapsItems = mapsList.get(position);
+        holder.mapsItemView.setText(mapsItems.getMapsName());
+        Log.e("Maps Name",mapsItems.getMapsName());
     }
 
     @Override
     public int getItemCount() {
-        return newsList.size();
+        return mapsList.size();
     }
 
-    NewsItemsAdapter(Context context, List<NewsItems> newsList) {
+    MapsItemsAdapter(Context context, List<MapsItems> mapsList) {
         mInflater = LayoutInflater.from(context);
-        Collections.reverse(this.newsList = newsList);
+        Collections.reverse(this.mapsList = mapsList);
     }
 
     public int getTextColor(){

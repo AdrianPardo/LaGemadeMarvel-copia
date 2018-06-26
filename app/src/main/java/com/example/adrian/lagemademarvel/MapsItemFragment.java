@@ -1,41 +1,39 @@
 package com.example.adrian.lagemademarvel;
 
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewsMenuFragment.OnFragmentInteractionListener} interface
+ * {@link MapsItemFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewsMenuFragment#newInstance} factory method to
+ * Use the {@link MapsItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewsMenuFragment extends android.app.Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+public class MapsItemFragment extends android.app.Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    FirebaseUser user;
-    FirebaseAuth mAuth;
+    ConstraintLayout mScreen;
+
 
     private OnFragmentInteractionListener mListener;
 
-    public NewsMenuFragment() {
+    public MapsItemFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +43,11 @@ public class NewsMenuFragment extends android.app.Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsMenuFragment.
+     * @return A new instance of fragment MapsItemFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static NewsMenuFragment newInstance(String param1, String param2) {
-        NewsMenuFragment fragment = new NewsMenuFragment();
+
+    public static MapsItemFragment newInstance(String param1, String param2) {
+        MapsItemFragment fragment = new MapsItemFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,8 +58,6 @@ public class NewsMenuFragment extends android.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
 
     }
 
@@ -69,11 +65,34 @@ public class NewsMenuFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Verified();
-        return inflater.inflate(R.layout.fragment_news_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_maps_items, container, false);
+        mScreen = view.findViewById(R.id.myScreen);
+        //mScreen.setBackgroundColor(getBackgroundColor());
+        TextView name = view.findViewById(R.id.Nombre);
+        TextView direc = view.findViewById(R.id.Direccion);
+        TextView mail = view.findViewById(R.id.Email);
+        TextView tel = view.findViewById(R.id.Telefono);
+        TextView hora = view.findViewById(R.id.Horario);
+
+        /*GradientDrawable gd = new GradientDrawable();
+        gd.setShape(GradientDrawable.RECTANGLE);
+        gd.setColor(getBackgroundColor());
+        gd.setCornerRadius(15.0f);*/
+
+        //title.setBackground(gd);
+        //article.setTextColor(getTextColor());
+
+        name.setText(getArguments().getString("Nombre"));
+        direc.setText(getArguments().getString("Direccion"));
+        mail.setText(getArguments().getString("Email"));
+        tel.setText(getArguments().getString("Telefono"));
+        hora.setText(getArguments().getString("Horario"));
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -97,6 +116,18 @@ public class NewsMenuFragment extends android.app.Fragment {
         mListener = null;
     }
 
+    public int getBackgroundColor(){
+        Context context = getActivity();
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return prefs.getInt("BGColor", 0xffffffff);
+    }
+
+    public int getTextColor(){
+        Context context = getActivity();
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return prefs.getInt("TColor", 0xff000000);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -108,14 +139,6 @@ public class NewsMenuFragment extends android.app.Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void Verified(){
-        if(!user.isEmailVerified()){
-            FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_frame, new AccessDeniedFragment()).commit();
-        }
     }
 }

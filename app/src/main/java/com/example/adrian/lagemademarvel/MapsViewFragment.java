@@ -1,6 +1,5 @@
 package com.example.adrian.lagemademarvel;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,19 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewsMenuFragment.OnFragmentInteractionListener} interface
+ * {@link MapsViewFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewsMenuFragment#newInstance} factory method to
+ * Use the {@link MapsViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewsMenuFragment extends android.app.Fragment {
+public class MapsViewFragment extends android.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,12 +26,10 @@ public class NewsMenuFragment extends android.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FirebaseUser user;
-    FirebaseAuth mAuth;
 
     private OnFragmentInteractionListener mListener;
 
-    public NewsMenuFragment() {
+    public MapsViewFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +39,11 @@ public class NewsMenuFragment extends android.app.Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsMenuFragment.
+     * @return A new instance of fragment MapsViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewsMenuFragment newInstance(String param1, String param2) {
-        NewsMenuFragment fragment = new NewsMenuFragment();
+    public static MapsViewFragment newInstance(String param1, String param2) {
+        MapsViewFragment fragment = new MapsViewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,17 +54,17 @@ public class NewsMenuFragment extends android.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Verified();
-        return inflater.inflate(R.layout.fragment_news_menu, container, false);
+        return inflater.inflate(R.layout.fragment_maps_view, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -110,12 +104,5 @@ public class NewsMenuFragment extends android.app.Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void Verified(){
-        if(!user.isEmailVerified()){
-            FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_frame, new AccessDeniedFragment()).commit();
-        }
     }
 }

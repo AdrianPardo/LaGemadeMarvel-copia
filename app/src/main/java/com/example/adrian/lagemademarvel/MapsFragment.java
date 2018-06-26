@@ -1,17 +1,20 @@
 package com.example.adrian.lagemademarvel;
 
-import android.app.Activity;
-import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,11 +28,8 @@ public class MapsFragment extends android.app.Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-    TextView name, location, promote;
-    ConstraintLayout promotion;
+    FrameLayout mScreen;
+    boolean isConnected;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,6 +37,14 @@ public class MapsFragment extends android.app.Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment CalenderFragment.
+     */
     public static MapsFragment newInstance(String param1, String param2) {
         MapsFragment fragment = new MapsFragment();
         Bundle args = new Bundle();
@@ -49,39 +57,40 @@ public class MapsFragment extends android.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+    }
+    public int getBackgroundColor(){
+        Context context = getActivity();
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        return prefs.getInt("BGColor", 0xffffffff);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        IsConnected();
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
-        name = view.findViewById(R.id.store_name);
-        location = view.findViewById(R.id.store_location);
-        promote = view.findViewById(R.id.promocionarse);
-        promotion = view.findViewById(R.id.store_promotion);
-
-        promote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        promote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment cp = new createPromotion();
-                android.app.FragmentManager fm = (getActivity()).getFragmentManager();
-                cp.show(fm, "boom");
-            }
-        });
-
+        if(isConnected) {
+            // Get a handle to the RecyclerView.
+            RecyclerView mRecyclerView = view.findViewById(R.id.recyclermaps);
+            // Create an adapter and supply the data to be displayed.
+            // Connect the adapter with the RecyclerView.
+            // Give the RecyclerView a default layout manager.
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+            mScreen = view.findViewById(R.id.myScreen);
+            //mScreen.setBackgroundColor(getBackgroundColor());
+            new MapsFetcher(mRecyclerView, getActivity()).execute();
+        }else{
+            Toast.makeText(getActivity(), "No hay conexion, comprueba tu conexion a internet!", Toast.LENGTH_LONG).show();
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.content_frame, new NoConnectionFragment()).commit();
+        }
         return view;
     }
+
+
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -89,16 +98,6 @@ public class MapsFragment extends android.app.Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
     @Override
     public void onDetach() {
@@ -106,17 +105,18 @@ public class MapsFragment extends android.app.Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void IsConnected(){
+        ConnectivityManager cm =
+                (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 }

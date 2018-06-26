@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.adrian.lagemademarvel.FavMenuFragment"
-    android:background="@drawable/space_background">
+    android:background="@drawable/fondo_azul">
 
     <!-- TODO: Update blank fragment layout -->
 
