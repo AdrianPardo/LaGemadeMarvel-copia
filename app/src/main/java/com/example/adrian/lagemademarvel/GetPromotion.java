@@ -72,12 +72,39 @@ public class GetPromotion extends DialogFragment implements AdapterView.OnItemSe
             public void onClick(View view) {
                 String mail = user.getEmail().replace(".", " ");
                 myRef = FirebaseDatabase.getInstance().getReference("tiendas");
-                myRef.child("Direccion").setValue(direccion.getText().toString());
-                myRef.child("Email").setValue(email.getText().toString());
-                myRef.child("Nombre").setValue(nombre.getText().toString());
-                myRef.child("Telefono").setValue(telefono.getText().toString());
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        GenericTypeIndicator<List<Object>> t = new GenericTypeIndicator<List<Object>>() {
+                        };
+                        List messages = snapshot.getValue(t);
+
+                        if (!printed) {
+                            if(messages == null){
+                                myRef.child("0").child("Direccion").setValue(direccion.getText().toString());
+                                myRef.child("0").child("Email").setValue(email.getText().toString());
+                                myRef.child("0").child("Nombre").setValue(nombre.getText().toString());
+                                myRef.child("0").child("Telefono").setValue(telefono.getText().toString());
+
+                            }else {
+                                myRef.child("").child("Direccion").setValue(direccion.getText().toString());
+                                myRef.child("").child("Email").setValue(email.getText().toString());
+                                myRef.child("").child("Nombre").setValue(nombre.getText().toString());
+                                myRef.child("").child("Telefono").setValue(telefono.getText().toString());
+                            }
+
+                            printed = true;
+                        }
+                    }
 
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
             }
         });
 
