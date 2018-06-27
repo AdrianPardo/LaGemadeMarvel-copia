@@ -24,7 +24,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="246dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -86,97 +86,6 @@
                     app:layout_constraintStart_toEndOf="@+id/imagencomic"
                     app:layout_constraintTop_toBottomOf="@+id/fav_button" />
 
-                <TextView
-                    android:id="@+id/nombrePersonajeComic12"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Lunes:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic18"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Martes:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic17"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Miercoles:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic16"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Jueves:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic15"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Viernes:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic14"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Sabado:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
-                <TextView
-                    android:id="@+id/nombrePersonajeComic13"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-
-
-                    android:gravity="center"
-                    android:text="Domingo:"
-                    android:textColor="@color/White"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imagencomic"
-                    app:layout_constraintTop_toBottomOf="@+id/fav_button" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -221,76 +130,6 @@
                     android:text="Name"
                     android:textColor="@color/BlancoRoto" />
 
-                <EditText
-                    android:id="@+id/lunes"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="8:00-13:00, 17:00-21:00"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
-                <EditText
-                    android:id="@+id/martes"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="8:00-13:00, 17:00-21:00"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
-                <EditText
-                    android:id="@+id/miercoles"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="8:00-13:00, 17:00-21:00"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
-                <EditText
-                    android:id="@+id/jueves"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="8:00-13:00, 17:00-21:00"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
-                <EditText
-                    android:id="@+id/viernes"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="8:00-13:00, 17:00-21:00"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
-                <EditText
-                    android:id="@+id/sabado"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="8:00-13:00, 17:00-21:00"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
-                <EditText
-                    android:id="@+id/domingo"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/Transparent"
-                    android:ems="10"
-                    android:hint="Cerrado"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/BlancoRoto" />
-
             </LinearLayout>
 
         </LinearLayout>
@@ -299,9 +138,11 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:text="Promocioname!"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 

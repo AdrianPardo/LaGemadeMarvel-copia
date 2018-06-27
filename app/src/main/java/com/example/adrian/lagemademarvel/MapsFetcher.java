@@ -72,13 +72,13 @@ public class MapsFetcher extends AsyncTask<Void, Void, String> {
         int test;
         try {
             JSONObject jsonO = new JSONObject(result);
-            JSONArray array = jsonO.getJSONArray("noticias");
+            JSONArray array = jsonO.getJSONArray("tiendas");
             test=array.length();
             Log.e("Array Length", "Maps fetcher: "+test);
 
             for (int x = 0; x < test ; x++) {
                 JSONObject jo = array.getJSONObject(x);
-                MapsItems ni = new MapsItems(jo.getString("Nombre"), jo.getString("Direccion"), jo.getString("Email"), jo.getString("Horario"), jo.getString("telph"));
+                MapsItems ni = new MapsItems(jo.getString("Nombre"), jo.getString("Direccion"), jo.getString("Email"), jo.getString("Telefono"));
                 mapsList.add(ni);
             }
             MapsItemsAdapter nAdapter = new MapsItemsAdapter(context, mapsList);

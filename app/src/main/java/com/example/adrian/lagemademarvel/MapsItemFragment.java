@@ -72,7 +72,6 @@ public class MapsItemFragment extends android.app.Fragment {
         TextView direc = view.findViewById(R.id.Direccion);
         TextView mail = view.findViewById(R.id.Email);
         TextView tel = view.findViewById(R.id.Telefono);
-        TextView hora = view.findViewById(R.id.Horario);
 
         /*GradientDrawable gd = new GradientDrawable();
         gd.setShape(GradientDrawable.RECTANGLE);
@@ -86,7 +85,6 @@ public class MapsItemFragment extends android.app.Fragment {
         direc.setText(getArguments().getString("Direccion"));
         mail.setText(getArguments().getString("Email"));
         tel.setText(getArguments().getString("Telefono"));
-        hora.setText(getArguments().getString("Horario"));
 
         return view;
     }

@@ -45,7 +45,6 @@ public class MapsItemsAdapter extends
             bundle.putString("Direccion",element.getMapsdirec());
             bundle.putString("Email",element.getMapsEmail());
             bundle.putString("Telefono",element.getMapsTelefono());
-            bundle.putString("Horario",element.getMapsHora());
             MapsItemFragment nif = new MapsItemFragment();
             nif.setArguments(bundle);
 
@@ -71,13 +70,6 @@ public class MapsItemsAdapter extends
         return new WordViewHolder(mItemView, this);
     }
 
-    private void getView(int position, View convertView) {
-        ImageView view = (ImageView) convertView;
-        if (view == null) {
-            view = new ImageView(context);
-        }
-    }
-
     @Override
     public void onBindViewHolder(MapsItemsAdapter.WordViewHolder holder, int position) {
         final MapsItems mapsItems = mapsList.get(position);
@@ -96,6 +88,6 @@ public class MapsItemsAdapter extends
     }
 
     public int getTextColor(){
-        return prefs.getInt("TColor", 0xff000000);
+        return prefs.getInt("TColor", 0xFFFFFFFF);
     }
 }

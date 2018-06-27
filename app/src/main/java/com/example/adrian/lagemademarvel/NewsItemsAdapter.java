@@ -100,6 +100,6 @@ public class NewsItemsAdapter extends
     }
 
     public int getTextColor(){
-        return prefs.getInt("TColor", 0xff000000);
+        return prefs.getInt("TColor", 0xFFFFFFFF);
     }
 }

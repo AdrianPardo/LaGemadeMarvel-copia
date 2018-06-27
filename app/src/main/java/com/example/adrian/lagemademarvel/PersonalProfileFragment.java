@@ -113,8 +113,7 @@ public class PersonalProfileFragment extends android.app.Fragment {
 
                     String[] to = { "adrianp.97@hotmail.es" };
                     String[] cc = { "adrianp.97@hotmail.es" };
-                    enviarEmail(to, cc, "Cuenta comercial",
-                            "El usuario: "+mail+", desea cambiar su tipo de cuenta a comercial");
+                    enviarEmail(to, cc, "Cuenta comercial", "El usuario: "+mail+", desea cambiar su tipo de cuenta a comercial");
                 }
 
             }
