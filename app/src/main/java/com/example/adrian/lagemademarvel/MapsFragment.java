@@ -1,5 +1,6 @@
 package com.example.adrian.lagemademarvel;
 
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,11 +11,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +40,10 @@ public class MapsFragment extends android.app.Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     FrameLayout mScreen;
-    boolean isConnected;
+    boolean isConnected, dataSet;
+    Button promocionarse;
+    FirebaseUser user;
+    FirebaseAuth mAuth;
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,7 +71,8 @@ public class MapsFragment extends android.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
     public int getBackgroundColor(){
         Context context = getActivity();
@@ -73,6 +88,16 @@ public class MapsFragment extends android.app.Fragment {
         IsConnected();
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
         if(isConnected) {
+            promocionarse = view.findViewById(R.id.promocionarse);
+            promocionarse.setVisibility(View.GONE);
+            promocionarse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DialogFragment newFragment = new GetPromotion();
+                    newFragment.show(getFragmentManager(),"missiles");
+                }
+            });
+            IsComercial(promocionarse);
             // Get a handle to the RecyclerView.
             RecyclerView mRecyclerView = view.findViewById(R.id.recyclermaps);
             // Create an adapter and supply the data to be displayed.
@@ -118,5 +143,25 @@ public class MapsFragment extends android.app.Fragment {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
+    }
+
+
+    public void IsComercial(final Button btn){
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
+        final String mail = user.getEmail().replace("."," ");
+
+        DatabaseReference profileRef = myRef.child(mail).child("Comercial").child("UsoComercial");
+        dataSet = false;
+        profileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean data = dataSnapshot.getValue(Boolean.class);
+                if(data == true) {
+                    btn.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
     }
 }
