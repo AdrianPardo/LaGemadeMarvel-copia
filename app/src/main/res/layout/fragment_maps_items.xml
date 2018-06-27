@@ -73,15 +73,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/Email"
                     tools:layout_editor_absoluteX="6dp" />
 
-                <TextView
-                    android:id="@+id/Horario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/White"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@+id/Telefono"
-                    tools:layout_editor_absoluteX="6dp" />
             </LinearLayout>
         </ScrollView>
     </android.support.constraint.ConstraintLayout>
