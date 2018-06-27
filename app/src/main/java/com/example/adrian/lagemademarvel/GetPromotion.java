@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,17 +27,16 @@ import java.util.List;
 public class GetPromotion extends DialogFragment implements AdapterView.OnItemSelectedListener{
 
 
-    /**
-     * Created by i7-4770 on 01/03/2018.
-     */
-
     String id;
     private TextView title, character, desc;
     ImageView cover, fav;
     FirebaseUser user;
     FirebaseAuth mAuth;
+    EditText nombre, email, direccion, telefono;
+    TextView correo;
     DatabaseReference myRef;
     boolean printed = false;
+    Button save;
 
 
     public static ViewComic newInstance(String param1, String param2) {
@@ -55,69 +56,30 @@ public class GetPromotion extends DialogFragment implements AdapterView.OnItemSe
         //id = getArguments().getString("ID");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.get_promotion, null);
-        /*title = view.findViewById(R.id.comic_name);
-        character = view.findViewById(R.id.NombrePersonajeComic);
-        desc = view.findViewById(R.id.descripcioncomic);
-        cover = view.findViewById(R.id.imagencomic);
-        fav = view.findViewById(R.id.fav_button);
-        Log.e("Type", ""+getArguments().getInt("Type"));
-        if(getArguments().get("Type") == null) {
-            title.setText(getArguments().getString("Title"));
-            character.setText(getArguments().getString("MainChar"));
-            desc.setText(getArguments().getString("Desc"));
-            Picasso.with(getActivity()).load(getArguments().getString("Image")).into(cover);
 
-            fav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fav.setImageResource(R.drawable.star_on);
-                    String mail = user.getEmail().replace(".", " ");
-                    Log.e("Email", "" + mail);
-                    myRef = FirebaseDatabase.getInstance().getReference("usuarios/" + mail + "/Favoritos/Comics");
-
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            GenericTypeIndicator<List<Object>> t = new GenericTypeIndicator<List<Object>>() {
-                            };
-                            List messages = snapshot.getValue(t);
-
-                            if (!printed) {
-                                if (messages == null) {
-                                    myRef.child("0").child("ID").setValue(getArguments().getString("ID"));
-                                    myRef.child("0").child("Name").setValue(getArguments().getString("Title"));
-                                } else {
-                                    myRef.child("" + messages.size()).child("ID").setValue(getArguments().getString("ID"));
-                                    myRef.child("" + messages.size()).child("Name").setValue(getArguments().getString("Title"));
-                                }
-
-                                printed = true;
-                            }
-                        }
-
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-
-                    });
-
-
-                }
-            });
-        }else if(getArguments().getInt("Type") == 0){
-            fav.setImageResource(R.drawable.star_on);
-            new FavFetcher(title, desc, cover, id, getActivity(), 0).execute();
-            character.setText("Data provided by Marvel. © 2018 MARVEL");
-        }else if(getArguments().getInt("Type") == 1){
-            fav.setImageResource(R.drawable.star_on);
-            new FavFetcher(title, desc, cover, id, getActivity(), 1).execute();
-            character.setText("Data provided by Marvel. © 2018 MARVEL");
-        }*/
 
         builder.setView(view);
         final AlertDialog alert = builder.create();
+
+        nombre = view.findViewById(R.id.store_name);
+        email = view.findViewById(R.id.store_email);
+        telefono = view.findViewById(R.id.store_number);
+        direccion = view.findViewById(R.id.store_location);
+        save = view.findViewById(R.id.promotion_save_button);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mail = user.getEmail().replace(".", " ");
+                myRef = FirebaseDatabase.getInstance().getReference("tiendas");
+                myRef.child("Direccion").setValue(direccion.getText().toString());
+                myRef.child("Email").setValue(email.getText().toString());
+                myRef.child("Nombre").setValue(nombre.getText().toString());
+                myRef.child("Telefono").setValue(telefono.getText().toString());
+
+
+            }
+        });
 
 
         // Create the AlertDialog object and return it

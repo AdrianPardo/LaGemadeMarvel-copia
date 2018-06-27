@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity
         AccessDeniedFragment.OnFragmentInteractionListener,
         ComicSearchFragment.OnFragmentInteractionListener,
         NoConnectionFragment.OnFragmentInteractionListener,
-        NewsItemFragment.OnFragmentInteractionListener{
+        NewsItemFragment.OnFragmentInteractionListener,
+        MapsItemFragment.OnFragmentInteractionListener{
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     FirebaseAuth mAuth;

@@ -34,7 +34,7 @@ import java.util.List;
  * Use the {@link PersonalProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonalProfileFragment extends android.app.Fragment {
+public class PersonalProfileFragment extends android.app.Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -88,6 +88,18 @@ public class PersonalProfileFragment extends android.app.Fragment {
     }
 
     @Override
+    public void onClick(View view) {
+        String mail = user.getEmail().replace(".", " ");
+        if (view.getId() == R.id.btnEnviarEmail) {
+            String[] to = { "adrianp.97@hotmail.es" };
+            String[] cc = { "adrianp.97@hotmail.es" };
+            enviarEmail(to, cc, "Cuenta comercial", "El usuario: "+mail+", desea cambiar su tipo de cuenta a comercial");
+
+        }
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -104,17 +116,10 @@ public class PersonalProfileFragment extends android.app.Fragment {
             @Override
             public void onClick(View view) {
                 String mail = user.getEmail().replace(".", " ");
-                if (view.getId() == R.id.profile_save_button) {
                     myRef = FirebaseDatabase.getInstance().getReference("usuarios/"+mail+"/Datos");
                     myRef.child("Name").setValue(nombre.getText().toString());
                     myRef.child("NickName").setValue(apodo.getText().toString());
 
-                }else{
-
-                    String[] to = { "adrianp.97@hotmail.es" };
-                    String[] cc = { "adrianp.97@hotmail.es" };
-                    enviarEmail(to, cc, "Cuenta comercial", "El usuario: "+mail+", desea cambiar su tipo de cuenta a comercial");
-                }
 
             }
         });

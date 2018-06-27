@@ -1,6 +1,7 @@
 package com.example.adrian.lagemademarvel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import com.squareup.picasso.Picasso;
  * Use the {@link MapsItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapsItemFragment extends android.app.Fragment {
+public class MapsItemFragment extends android.app.Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -60,6 +61,15 @@ public class MapsItemFragment extends android.app.Fragment {
         super.onCreate(savedInstanceState);
 
     }
+
+    @Override
+    public void onClick(View view) {
+
+        Intent intent = new Intent (view.getContext(), GetPromotion.class);
+        startActivityForResult(intent, 0);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

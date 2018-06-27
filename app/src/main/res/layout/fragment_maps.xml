@@ -22,6 +22,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Haga click para promocionarse"
                 android:textColor="@color/colorPrimaryDark"
+                android:onClick="onClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
